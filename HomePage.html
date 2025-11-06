@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClutchStatus</title>
+   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+   <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+   <link rel="shortcut icon" href="favicon_io/favicon.ico" type="image/x-icon">
+   </head>
+<style>
+/* LED фон для body */
+body {
+  position: relative;
+  background: #111; /* тёмный фон */
+  min-height: 100vh;
+  margin: 0;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 30% 30%, rgba(138,43,226,0.3), transparent 30%),
+              radial-gradient(circle at 70% 70%, rgba(0,255,128,0.3), transparent 30%),
+              radial-gradient(circle at 50% 50%, rgba(0,128,255,0.2), transparent 30%);
+  animation: ledPulse 6s infinite alternate;
+  z-index: -10;
+}
+
+@keyframes ledPulse {
+  0% { transform: scale(1) rotate(0deg); opacity: 0.6; }
+  50% { transform: scale(1.05) rotate(45deg); opacity: 0.9; }
+  100% { transform: scale(1) rotate(90deg); opacity: 0.6; }
+}
+
+/* пример контента */
+.container {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  padding-top: 100px;
+  color: white;
+  font-family: sans-serif;
+}
+</style>
+</head>
+<body>
+  
+
+
+<nav class="bg-white border-gray-200 dark:bg-gray-900 sticky top-0 z-50">
+  <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+    <a href="HomePage.html" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <img src="img//ChatGPT Image 29 окт. 2025 г., 14_57_16.png" class="size-[50px]" alt="ClutchStatus logo" />
+        <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">ClutchStatus</span>
+    </a>
+    <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-default" aria-expanded="false">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+        </svg>
+    </button>
+    <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+      <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+        <li>
+          <a href="HomePage.html" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Главная</a>
+        </li>
+        <li>
+          <a href="Comand.html" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Команды</a>
+        </li>
+        <li>
+          <a href="Match.html" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Матчи</a>
+        </li>
+        <li>
+          <a href="Players.html" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Игроки</a>
+        </li>
+        <li>
+          <a href="Shop.html" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Магазин</a>
+        </li>
+        
+      </ul>
+    </div>
+
+    <div class="flex md:order-2">
+    <button type="button" data-collapse-toggle="navbar-search" aria-controls="navbar-search" aria-expanded="false" class="md:hidden text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 me-1">
+      <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+      </svg>
+      <span class="sr-only">Search</span>
+    </button>
+    <div class="relative hidden md:block">
+      <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+        </svg>
+        <span class="sr-only">Search icon</span>
+      </div>
+      <input type="text" id="search-navbar" class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="поиск...">
+    </div>
+
+    <button id="dropdownAvatarNameButton" data-dropdown-toggle="dropdownAvatarName" class="flex items-center text-sm pe-1 font-medium text-gray-900 rounded-full hover:text-blue-600 dark:hover:text-blue-500 md:me-0 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-white ml-[100px]" type="button">
+<span class="sr-only">Open user menu</span>
+<img class="w-6 h-6 me-2 rounded-full" src="/img/navi.png" alt="user photo">
+Ahmad Umarov
+<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+</svg>
+</button>
+
+<!-- Dropdown menu -->
+<div id="dropdownAvatarName" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600 ">
+    <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+      <div class="font-medium ">Про Пользователь</div>
+      <div class="truncate">ahmadumarov27@gmail.com</div>
+    </div>
+    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownInformdropdownAvatarNameButtonationButton">
+      <li>
+        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Панель управления</a>
+      </li>
+      <li>
+        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Настройки</a>
+      </li>
+      <li>
+        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Заработок</a>
+      </li>
+    </ul>
+    <div class="py-2">
+      <a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Выйти</a>
+    </div>
+</div>
+  </div> 
+  </div>
+</nav>
+
+
+<div>
+  <img src="/img/Gaming-series.webp" alt="" class="w-full h-[290px] ">
+</div>
+<div>
+  
+  <div class="w-full max-w-6xl mx-auto my-10 ">
+  <video autoplay muted loop class="w-full rounded-lg shadow-lg">
+    <source src="/img/video/Introducing the PRO X SUPERLIGHT Wireless Gaming Mouse.mp4" type="video/mp4">
+  </video>
+</div>
+
+</div>
+
+<div class="flex justify-center mt-[50px]">
+  <img src="/img/maxresdefault.jpg" alt="" class="hover:scale-105 duration-300 cursor-pointer" >
+</div>
+
+<div>
+  <h1 class="text-[58px] text-center pt-[50px] font-bold text-white  drop-shadow-[0_0_10px_#8b5cf6]">Топ команд</h1>
+
+
+  <div class="flex justify-center gap-[70px] mt-[40px] m-auto">
+    <div><img src="/img/navi.png" alt="" class="size-[160px] hover:scale-125 duration-100 cursor-pointer">
+    <p class="text-white text-[38px] pt-[20px] flex justify-center">NAVI</p>
+  </div>
+
+  <div>
+    <img src="/img/falcons.png" alt="" class="size-[160px] m-auto hover:scale-125 duration-100 cursor-pointer">
+    <p class="text-white text-[38px] pt-[20px] ">TEAM FALCONS</p>
+  </div>
+
+  <div>
+    <img src="/img/spirit.jpg" alt="" class="size-[160px] m-auto hover:scale-125 duration-100 cursor-pointer">
+    <p class="text-white text-[38px]  pt-[20px] flex justify-center">TEAM SPIRIT</p>
+  </div>
+
+  <div>
+    <img src="/img/mouz.png" alt="" class="size-[160px] hover:scale-125 duration-100 cursor-pointer ">
+    <p class="text-white text-[38px] pt-[20px] flex justify-center ">MOUZ</p>
+  </div>
+
+   <div>
+    <img src="/img/mongols.png" alt="" class="size-[160px] hover:scale-125 duration-100 cursor-pointer">
+    <p class="text-white text-[38px] pt-[20px] flex justify-center ">MONGOLZ</p>
+  </div>
+
+  <div>
+    <img src="/img/vitality.png" alt="" class="size-[160px] hover:scale-125 duration-100 cursor-pointer ">
+    <p class="text-white text-[38px] pt-[20px] flex justify-center ">VITALITY</p>
+  </div>
+
+  </div>
+</div>
+
+<h1 class="text-[58px] text-center pt-[100px] font-bold text-blue-400  drop-shadow-[0_0_10px_#8b5cf6]"> Статистика игроков</h1>
+
+
+<div class="flex justify-center gap-[50px] mt-[60px] ">
+  <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 hover:scale-105 duration-100 cursor-pointer">
+    <a href="#">
+        <img class="rounded-t-lg" src="/img/zywoo.jpg" alt="" />
+    </a>
+    <div class="p-5 ">
+        <a href="#">
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">ZywOo</h5>
+        </a>
+        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 leading-[30px]">K/D Ratio (соотношение убийств к смертям): около 1.39.
+          <br>
+          Средний урон за раунд (ADR): ~ 87.4.
+          <br>
+          Процент headshot’ов: ~ 41.6%.
+          <br>
+          Карты сыграны: ~ 1529.
+          <br>
+          В свежих данных (другие источники) — Kills/round: ~0.84.
+        </p>
+    </div>
+</div>
+
+<div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 hover:scale-105 duration-100 cursor-pointer">
+    <a href="#">
+        <img class="rounded-t-lg" src="/img/600px-M0NESY_at_BLAST_Rivals_Spring_2025.jpg" alt="" />
+    </a>
+    <div class="p-5">
+        <a href="#">
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">m0NESY</h5>
+        </a>
+        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 leading-[30px]">Общий K/D Ratio: ≈ 1.32 (Total kills 14 750 / Total deaths 11 163)
+          <br>
+          Средний урон за раунд (ADR): ≈ 79.8
+          <br>
+          Процент хедшотов (HS%): ≈ 39.9%
+          <br>
+          Карты сыграны: 773
+          <br>
+          Opening‑kills / Opening deaths: 2 615 opening убийств / 1 516 opening смертей → Opening Kill Ratio ~ 1.72
+        </p>
+    </div>
+</div>
+
+<div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 hover:scale-105 duration-100 cursor-pointer">
+    <a href="#">
+        <img class="rounded-t-lg" src="/img/s1mple-BLAST.tv-Austin-Major-2025.webp" alt="" />
+    </a>
+    <div class="p-5">
+        <a href="#">
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">s1mple</h5>
+        </a>
+        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 leading-[30px]">Общий рейтинг по версии HLTV.org: ~ 1.16 (по ~1820 картам)
+          <br>
+          Средний урон за раунд (ADR – Average Damage per Round): ~ 85‑90 (в одном источнике указано
+          <br>
+          Процент хедшотов (HS%): ≈ 41.1%
+          <br>
+          Убийств за раунд (Kills per Round — KPR): ~ 0.84
+          <br>
+          За карьеру сыграл ~ 1727 карт; из них лишь 32 (≈ 1.85 %) он заканчивал с K/D ≤ ‑10.
+        </p>
+    </div>
+</div>
+
+<div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 hover:scale-105 duration-100 cursor-pointer">
+    <a href="#">
+        <img class="rounded-t-lg" src="/img/600px-Markeloff_at_PGL_Major_Krakow_2017.jpg" alt="" />
+    </a>
+    <div class="p-5">
+        <a href="#">
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">markeloff</h5>
+        </a>
+        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 leading-[30px]">Процент попаданий в голову (Headshot %): ~ 41.6%.
+          <br>
+          K/D Ratio (соотношение убийств к смертям): ~ 1.03.
+          <br>
+          Средний урон за раунд (ADR): ~ 74.3.
+          <br>
+          Убийств за раунд (Kills per Round ~ KPR): ~ 0.67.
+          <br>
+          Общая запись: ~ 19 780 убийств за ~1 143 карт..
+        </p>
+    </div>
+</div>
+
+</div>
+
+<h1 class="text-8xl font-black text-red-600 animate-pulse text-center pt-[30px]">
+  Прошедшие LIVE турниры
+</h1>
+
+<div class="flex justify-center gap-[40px] mt-[50px]">
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/_wCP-7bSMQ8?si=dyJCOI25DFu5yiQV" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/9vodWL8xZew?si=0hY45HLNxSnUMizC" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/UikGcEYWr2U?si=mSalrbtknLfD8A9o" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+
+<div class="flex justify-center gap-[40px] mt-[50px]">
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/8UnFb2OzulM?si=vbQw7i1UUAihY3nq" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/i3gRdP_47i0?si=4l2To-N_nX_45IM7" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/axlYV_0KxzU?si=yFEBpjZ3863lU86G" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+
+<footer class="">
+    <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
+        <div class="sm:flex sm:items-center sm:justify-between">
+            <a href="https://flowbite.com/" class="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
+                <img src="/img/ChatGPT Image 29 окт. 2025 г., 14_57_16.png" class="h-30" alt="ClutchStatus Logo" />
+                <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">ClutchStatus</span>
+            </a>
+            <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
+                <li>
+                    <a href="#" class="hover:underline me-4 md:me-6">О нас</a>
+                </li>
+                <li>
+                    <a href="#" class="hover:underline me-4 md:me-6">Политика конфиденциальности</a>
+                </li>
+                <li>
+                    <a href="#" class="hover:underline me-4 md:me-6">Лицензирование</a>
+                </li>
+                <li>
+                    <a href="#" class="hover:underline">Контакты</a>
+                </li>
+            </ul>
+        </div>
+        <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+        <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2025 <a href="https://flowbite.com/" class="hover:underline">ClutchStatus™</a>. Все права защищены.</span>
+    </div>
+</footer>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClutchStatus</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+   <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+</head>
+<style>
+/* LED фон для body */
+body {
+  position: relative;
+  background: #111; /* тёмный фон */
+  min-height: 100vh;
+  margin: 0;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 30% 30%, rgba(138,43,226,0.3), transparent 30%),
+              radial-gradient(circle at 70% 70%, rgba(0,255,128,0.3), transparent 30%),
+              radial-gradient(circle at 50% 50%, rgba(0,128,255,0.2), transparent 30%);
+  animation: ledPulse 6s infinite alternate;
+  z-index: -10;
+}
+
+@keyframes ledPulse {
+  0% { transform: scale(1) rotate(0deg); opacity: 0.6; }
+  50% { transform: scale(1.05) rotate(45deg); opacity: 0.9; }
+  100% { transform: scale(1) rotate(90deg); opacity: 0.6; }
+}
+
+/* пример контента */
+.container {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  padding-top: 100px;
+  color: white;
+  font-family: sans-serif;
+}
+</style>
+</head>
+<body>
+    <nav class="bg-white border-gray-200 dark:bg-gray-900 sticky top-0 z-50">
+  <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+    <a href="HomePage.html" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <img src="img//ChatGPT Image 29 окт. 2025 г., 14_57_16.png" class="size-[50px]" alt="ClutchStatus logo" />
+        <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">ClutchStatus</span>
+    </a>
+    <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-default" aria-expanded="false">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+        </svg>
+    </button>
+    <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+      <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+        <li>
+          <a href="HomePage.html" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Главная</a>
+        </li>
+        <li>
+          <a href="Comand.html" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Команды</a>
+        </li>
+        <li>
+          <a href="Match.html" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Матчи</a>
+        </li>
+        <li>
+          <a href="Players.html" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Игроки</a>
+        </li>
+        <li>
+          <a href="Shop.html" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Магазин</a>
+        </li>
+        
+      </ul>
+    </div>
+    <div class="flex md:order-2">
+    <button type="button" data-collapse-toggle="navbar-search" aria-controls="navbar-search" aria-expanded="false" class="md:hidden text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 me-1">
+      <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+      </svg>
+      <span class="sr-only">Search</span>
+    </button>
+    <div class="relative hidden md:block">
+      <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+        </svg>
+        <span class="sr-only">Search icon</span>
+      </div>
+      <input type="text" id="search-navbar" class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="поиск...">
+    </div>
+
+    <button id="dropdownAvatarNameButton" data-dropdown-toggle="dropdownAvatarName" class="flex items-center text-sm pe-1 font-medium text-gray-900 rounded-full hover:text-blue-600 dark:hover:text-blue-500 md:me-0 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-white ml-[100px]" type="button">
+<span class="sr-only">Open user menu</span>
+<img class="w-6 h-6 me-2 rounded-full" src="/img/navi.png" alt="user photo">
+Ahmad Umarov
+<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+</svg>
+</button>
+
+<!-- Dropdown menu -->
+<div id="dropdownAvatarName" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600 ">
+    <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+      <div class="font-medium ">Про Пользователь</div>
+      <div class="truncate">ahmadumarov27@gmail.com</div>
+    </div>
+    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownInformdropdownAvatarNameButtonationButton">
+      <li>
+        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Панель управления</a>
+      </li>
+      <li>
+        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Настройки</a>
+      </li>
+      <li>
+        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Заработок</a>
+      </li>
+    </ul>
+    <div class="py-2">
+      <a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Выйти</a>
+    </div>
+</div>
+  </div> 
+  </div> 
+</nav>
+
+
+
+
+ <h1 class="text-[58px] text-center pt-[50px] font-bold text-white  drop-shadow-[0_0_10px_#8b5cf6]">m0NESY</h1>
+<div class="flex justify-center mt-[20px] hover:scale-90 duration-300 cursor-pointer">
+    <div>
+        <img src="/img/monesy.jpg" alt="" class="">
+    </div>
+    <div class="border border-gray-200 rounded-r-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 w-[800px] ">
+        <p class="text-slate-100 text-[40px] text-center font-semibold">💎 Ilya “m0NESY” Osipov</p>
+        <p class="text-gray-400 text-[24px] p-[20px]">Страна: 🇷🇺 Россия 
+          <br>
+           Команда: G2 Esports
+           <br>
+           Роль: AWPer</p>
+           <p class="font-bold text-white   text-[40px] p-[10px]">🧠 О игроке</p>
+           <p class="text-gray-400 text-[24px] p-[20px]">Илья Осипов, известный под ником m0NESY, — молодой профессиональный игрок в Counter-Strike 2 из России.
+Родился 1 мая 2005 года в Москве.
+Начал карьеру в системе NAVI Junior, где быстро проявил себя как один из самых талантливых снайперов нового поколения.
+В 2022 году перешёл в G2 Esports, став одним из самых молодых игроков, выступающих на топ-уровне.</p>
+<p class="text-[40px] text-[white] font-semibold p-[20px]">🏆 Достижения</p>
+<p class="text-[24px] text-gray-400 p-[20px]">🥇 BLAST Premier World Final 2022 — Чемпион
+  <br>
+
+🥇 IEM Katowice 2023 — Чемпион
+<br>
+
+🥈 IEM Cologne 2022 — Финалист
+<br>
+
+🏆 Несколько наград MVP по версии HLTV</p>
+
+    </div>
+</div>
+
+<h1 class="text-[58px] text-center pt-[100px] font-bold text-white  drop-shadow-[0_0_10px_#8b5cf6]">ZywOo</h1>
+<div class="flex justify-center mt-[20px] hover:scale-90 duration-300 cursor-pointer">
+    <div>
+        <img src="/img/ZywOo-cs-go.jpeg" alt="" class="w-[900px]">
+    </div>
+    <div class="border border-gray-200 rounded-r-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 w-[800px] ">
+        <p class="text-slate-100 text-[40px] text-center font-semibold">🟡 Mathieu “ZywOo” Herbaut</p>
+        <p class="text-gray-400 text-[24px] p-[20px]">
+          Страна: 🇫🇷 Франция
+          <br>
+          Команда: Team Vitality
+          <br>
+           Роль: AWPer</p>
+           <p class="font-bold text-white   text-[40px] p-[10px]">💎 О игроке</p>
+           <p class="text-gray-400 text-[24px] p-[20px]">Матьё Эробо, более известный под ником ZywOo, — профессиональный игрок в Counter-Strike 2 из Франции.
+Родился 9 ноября 2000 года.
+Стал известен благодаря своей невероятной стабильности и точности.
+ZywOo присоединился к Team Vitality в 2018 году и быстро стал одной из ключевых фигур команды.
+Он неоднократно признавался лучшим игроком года по версии HLTV.</p>
+<p class="text-[40px] text-[white] font-semibold p-[20px]">🏆 Достижения</p>
+<p class="text-[24px] text-gray-400 p-[20px]">🥇 IEM Katowice 2023 — MVP
+  <br>
+
+🥇 BLAST Premier World Final 2022 — Чемпион
+<br>
+
+🏆 Major Copenhagen 2024 — MVP
+<br>
+
+🥈 ESL Pro League Season 16 — Finalist</p>
+    </div>
+</div>
+
+
+<h1 class="text-[58px] text-center pt-[100px] font-bold text-white  drop-shadow-[0_0_10px_#8b5cf6]">s1mple</h1>
+<div class="flex justify-center mt-[20px] hover:scale-90 duration-300 cursor-pointer">
+    <div>
+        <img src="/img/simple.webp" alt="" class="w-[900px]">
+    </div>
+    <div class="border border-gray-200 rounded-r-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 w-[800px] ">
+        <p class="text-slate-100 text-[40px] text-center font-semibold">💎 Oleksandr “s1mple” Kostyliev</p>
+        <p class="text-gray-400 text-[24px] p-[20px]">
+          Страна: 🇺🇦 Украина
+          <br>
+          Команда: Natus Vincere (NaVi)
+          <br>
+           Роль: AWPer / Rifler</p>
+           <p class="font-bold text-white   text-[40px] p-[10px]">🧠 О игроке</p>
+           <p class="text-gray-400 text-[24px] p-[20px]">Олександр Костылев, известный как s1mple, — один из лучших профессиональных игроков в Counter-Strike 2 и CS:GO в истории.
+Родился 2 октября 1997 года в Киеве, Украина.
+Начал карьеру в 2013 году, быстро стал известен благодаря невероятной точности, рефлексам и универсальности в роли снайпера.
+s1mple славится агрессивным стилем игры, умением выигрывать ключевые раунды и огромным влиянием на результаты команды, а также харизмой и лидерскими качествами.</p>
+<p class="text-[40px] text-[white] font-semibold p-[20px]">🏆 Достижения</p>
+<p class="text-[24px] text-gray-400 p-[20px]">🥇 IEM Katowice 2023 — MVP
+  <br>
+
+🥇 PGL Major Stockholm 2021 — Чемпион
+<br>
+
+🥇 BLAST Premier Global Final 2021 — Чемпион
+<br>
+🥇 IEM Katowice 2022 — Чемпион
+</p>
+    </div>
+</div>
+
+<h1 class="text-[58px] text-center pt-[100px] font-bold text-white  drop-shadow-[0_0_10px_#8b5cf6]">donk</h1>
+<div class="flex justify-center mt-[20px] hover:scale-90 duration-300 cursor-pointer">
+    <div>
+        <img src="/img/donk.webp" alt="" class="w-[900px]">
+    </div>
+    <div class="border border-gray-200 rounded-r-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 w-[800px] ">
+        <p class="text-slate-100 text-[40px] text-center font-semibold">💎 Danil “donk” Kryshkovets</p>
+        <p class="text-gray-400 text-[24px] p-[20px]">
+          Страна: 🇷🇺 Россия
+          <br>
+          Команда: Team Spirit
+          <br>
+           Роль: Rifler</p>
+           <p class="font-bold text-white   text-[40px] p-[10px]">🧠 О игроке</p>
+           <p class="text-gray-400 text-[24px] p-[20px]">Данил Крышковец, известный под ником donk, — молодой профессиональный игрок в Counter-Strike 2 из России.
+Родился 25 января 2007 года в Томске.
+Начал карьеру в академии Team Spirit, где быстро проявил себя как талантливый rifler.
+В 2023 году перешёл в основную команду Team Spirit, став одним из ключевых игроков и показывая высокую стабильность на топ-уровне.</p>
+<p class="text-[40px] text-[white] font-semibold p-[20px]">🏆 Достижения</p>
+<p class="text-[24px] text-gray-400 p-[20px]">🥇 IEM Katowice 2023 — MVP
+  <br>
+
+🥇 Perfect World Shanghai Major 2024 — Чемпион
+<br>
+
+🥇 Несколько MVP-наград на турнирах 2024 года
+<br>
+🏆 HLTV — Игрок года 2024
+</p>
+    </div>
+</div>
+
+
+<h1 class="text-[58px] text-center pt-[100px] font-bold text-white  drop-shadow-[0_0_10px_#8b5cf6]">Niko</h1>
+<div class="flex justify-center mt-[20px] hover:scale-90 duration-300 cursor-pointer">
+    <div>
+        <img src="/img/Niko-Profile-Image.png" alt="" class="w-[900px]">
+    </div>
+    <div class="border border-gray-200 rounded-r-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 w-[800px] ">
+        <p class="text-slate-100 text-[40px] text-center font-semibold">💎 Nikola “NiKo” Kovač</p>
+        <p class="text-gray-400 text-[24px] p-[20px]">
+          Страна: 🇧🇦 Босния и Герцеговина
+          <br>
+          Команда: G2 Esports
+          <br>
+           Роль: Rifler / IGL</p>
+           <p class="font-bold text-white   text-[40px] p-[10px]">🧠 О игроке</p>
+           <p class="text-gray-400 text-[24px] p-[20px]">Никола Ковач, известный под ником NiKo, — один из самых известных профессиональных игроков в Counter-Strike 2 и CS:GO.
+Родился 16 февраля 1997 года в Боснии и Герцеговине.
+Начал карьеру в 2014 году, быстро проявив себя как талантливый rifler с отличной механикой.
+NiKo известен универсальностью, сильной индивидуальной игрой и лидерскими качествами, часто выступает как in-game leader (IGL).</p>
+<p class="text-[40px] text-[white] font-semibold p-[20px]">🏆 Достижения</p>
+<p class="text-[24px] text-gray-400 p-[20px]">🥇 IEM Cologne 2021 — Чемпион
+  <br>
+
+🥇 IEM Cologne 2021 — Чемпион
+<br>
+
+🥇 ESL One Cologne 2020 — Чемпион
+<br>
+🏆 Несколько наград MVP по версии HLTV
+</p>
+    </div>
+</div>
+
+<footer class="">
+    <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
+        <div class="sm:flex sm:items-center sm:justify-between">
+            <a href="https://flowbite.com/" class="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
+                <img src="/img/ChatGPT Image 29 окт. 2025 г., 14_57_16.png" class="h-30" alt="ClutchStatus Logo" />
+                <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">ClutchStatus</span>
+            </a>
+            <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
+                <li>
+                    <a href="#" class="hover:underline me-4 md:me-6">О нас</a>
+                </li>
+                <li>
+                    <a href="#" class="hover:underline me-4 md:me-6">Политика конфиденциальности</a>
+                </li>
+                <li>
+                    <a href="#" class="hover:underline me-4 md:me-6">Лицензирование</a>
+                </li>
+                <li>
+                    <a href="#" class="hover:underline">Контакты</a>
+                </li>
+            </ul>
+        </div>
+        <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+        <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2025 <a href="https://flowbite.com/" class="hover:underline">ClutchStatus™</a>. Все права защищены.</span>
+    </div>
+</footer>
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+</body>
+</html>
